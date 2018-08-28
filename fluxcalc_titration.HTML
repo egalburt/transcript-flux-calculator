@@ -1,0 +1,439 @@
+<html>
+    
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+</head>
+    
+<body>
+
+<h1><center>TRANSCRIPT FLUX CALCULATOR 2: Rate Constant Titrations</center></h1>
+
+<div class="column">
+
+<div class="row" align="justify">
+    
+    This calculator determines mRNA flux as a function of one of the rate constants or polymerase concentration. 
+    This may be useful for judging the relative importance of individual rates given a set of rates. After parameters for
+    a promoter of interest are entered in the boxes below, the buttons may be pushed to perform a titration of an individual parameter. The
+    range of the titration of that particular parameter and the resolution of the titration are entered to the right. A plot will appear to the right displaying the titration
+    using the y-axis scale selected from the dropdown menu. The resulting data can be downloaded in semi-colon separated format.
+    
+</div>
+    <p></p>
+<div class="row">
+
+  <div class="minicolumnleft">
+    <font size=5>
+        <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>on</sub></span>
+        <input type="number" min="0.01" step="0.01" id="onrate" value="0.1">
+        <button onclick="plot_titration(1)">Titrate On Rate</button>    
+  </div>
+        <div class="minicolumnright">
+            <b>titration minimum <input type="number" min="0.01" step="0.01" id="titrate_min" value="1">            
+        </div>
+</div>
+
+<p></p>
+
+<div class="row">
+
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>off</sub></span>
+    <input type="number" min="0.01" step="0.01" id="offrate" value="10">
+    <button onclick="plot_titration(2)">Titrate Off Rate</button>
+  </div>
+      <div class="minicolumnright">
+            <b>titration maximum <input type="number" min="0.01" step="0.01" id="titrate_max" value="100">            
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>open</sub></span>
+    <input type="number" min="0.01" step="0.01" id="openrate" value="1">
+    <button onclick="plot_titration(3)">Titrate Open Rate</button>
+  </div>
+      <div class="minicolumnright">
+            <b>titration resolution <input type="number" min="0.01" step="0.01" id="titrate_res" value="10">            
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>close</sub></span>
+    <input type="number" min="0.01" step="0.01" id="closerate" value="10">
+    <button onclick="plot_titration(4)">Titrate Close Rate</button>
+  </div>
+      <div class="minicolumnright">
+        Y-axis scale:
+        <select id="mySelect" onchange="rePlot()">
+            <option value="1">Flux
+            <option value="2">Percent of Max Flux
+            <option value="3">Fold-Change across Titration
+            <option value="4">Fold-Change over Basal Level
+        </select>
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>esc</sub></span>
+    <input type="number" min="0.01" step="0.01" id="escaperate" value="10">
+    <button onclick="plot_titration(5)">Titrate Escape Rate</button>
+  </div>
+      <div class="minicolumnright">
+          <button onclick="exportData()">Download</button>
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+  <div class="minicolumnleft">
+    <b>[R]<span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'><font color=#fff>0</font></sub></span>
+    <input type="number" min="0.01" step="0.01" id="concentration" value="1000">
+    <button onclick="plot_titration(6)">Titrate Concentration</button>
+  </div>
+</div>
+</div>
+
+<div class="column">
+    <canvas id="myChart" width='500px' height='300px' style="border:0px solid #000000;"></canvas>
+</div>
+      
+    
+</body>
+</html>
+
+
+<style type="text/css">
+
+* {
+    box-sizing: border-box;
+}
+    
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0px;
+}
+    
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.minicolumnleft {
+    float: left;
+    width: 50%;
+}
+
+.minicolumnright {
+    float: right;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+input {
+    font-size: 24px;
+    width: 3em ;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+span.greybox {
+    color: #000000;
+    background: #aaa;
+    margin: 0 0 0 0;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: #000;
+}
+
+.supsub {
+    display: inline-block;
+}
+
+.supsub sup,
+.supsub sub {
+    position: relative;
+    display: block;
+    font-size: .5em;
+    line-height: 1.1;
+}
+
+.supsub sub {
+    top: .2em;
+}
+
+</style>
+
+
+<script>
+
+var basalflux;
+    
+var yaxis = 0;
+var yflux = 0;
+var maxflux = 0; 
+var minflux = 0; 
+    
+var scaled_yflux = 0;
+var max_scaled = 0; 
+var min_scaled = 0; 
+    
+var fold_yflux = 0;
+var max_fold = 0; 
+var min_fold = 0;  
+    
+var xaxis = 0;
+var myChart;
+    
+function flux(nM, on, off, open, close, escape) {
+    var tpm = 60 * escape * Number(on*nM) / (Number(on*nM) + Number(open) + Number(off) - Number(open * (Number(close)-Number(on*nM)) / (Number(close)+Number(escape)) ) ) * (open/(Number(close)+Number(escape)));
+    return parseFloat(tpm.toFixed(3));
+} 
+
+Chart.defaults.global.legend.display = false;
+Chart.defaults.global.xAxes = false;
+    
+function plot_titration(input) {
+    
+    var conc = document.getElementById("concentration").value;
+    var kon = document.getElementById("onrate").value;
+    var koff = document.getElementById("offrate").value;
+    var kopen = document.getElementById("openrate").value;
+    var kclose = document.getElementById("closerate").value;
+    var kescape = document.getElementById("escaperate").value;
+    
+    basalflux = flux(conc, kon, koff, kopen, kclose, kescape);
+    
+    var min = Number(document.getElementById("titrate_min").value);
+    var max = Number(document.getElementById("titrate_max").value);
+    var res = Number(document.getElementById("titrate_res").value);
+    
+    if (input !== 0) {
+        
+        yflux = [];
+        xaxis = [];
+        
+        for(var i=min; i<=max; i=i+res) {
+            xaxis.push(parseFloat(i.toFixed(1)));
+            if (input == 1){
+                yflux.push(flux(conc, i, koff, kopen, kclose, kescape));
+                xaxis_label = 'k_on (1/s)';
+                }
+            else if (input == 2){
+                yflux.push(flux(conc, kon, i, kopen, kclose, kescape));
+                xaxis_label = 'k_off (1/s)';
+            }
+            else if (input == 3){
+                yflux.push(flux(conc, kon, koff, i, kclose, kescape));
+                xaxis_label = 'k_open (1/s)';
+            }
+            else if (input == 4){
+                yflux.push(flux(conc, kon, koff, kopen, i, kescape));
+                xaxis_label = 'k_close (1/s)';
+            }       
+            else if (input == 5){
+                yflux.push(flux(conc, kon, koff, kopen, kclose, i));
+                xaxis_label = 'k_escape (1/s)';
+            }
+            else if (input == 6){
+                yflux.push(flux(i, kon, koff, kopen, kclose, kescape));
+                xaxis_label = 'concentration (nM)';
+            }
+        }
+    
+        maxflux = Math.max(...yflux);
+        minflux = Math.min(...yflux);
+        xmin = Math.min(...xaxis);
+        xmax = Math.max(...xaxis);
+
+        scaled_yflux = [];
+        for (var j=0; j<yflux.length; j++){
+            scaled_yflux[j] = 100*yflux[j]/maxflux;
+        }
+        max_scaled = Math.max(...scaled_yflux);
+        min_scaled = Math.min(...scaled_yflux);
+        
+        fold_yflux = [];
+        for (var k=0; k<yflux.length; k++){
+            fold_yflux[k] = yflux[k]/yflux[0];
+        }
+        max_fold = Math.max(...fold_yflux);
+        min_fold = Math.min(...fold_yflux);
+        
+        fold_yflux_basal = [];
+        for (var k=0; k<yflux.length; k++){
+            fold_yflux_basal[k] = yflux[k]/basalflux;
+        }
+        max_fold_basal = Math.max(...fold_yflux_basal);
+        min_fold_basal = Math.min(...fold_yflux_basal);
+        
+        var type = Number(document.getElementById("mySelect").value);
+        if (type == 1) {
+            yaxis = yflux; 
+            ymin = minflux;
+            ymax = maxflux;
+            yaxis_label = 'Flux (1/min)'
+        } else if (type == 2) {
+            yaxis = scaled_yflux;
+            ymin = min_scaled;
+            ymax = max_scaled;
+            yaxis_label = 'Percent of Max Flux of titration'
+        } else if (type == 3) {
+            yaxis = fold_yflux;
+            ymin = min_fold;
+            ymax = max_fold;
+            yaxis_label = 'Flux Fold-Change over titration'
+        } else if (type == 4) {
+            yaxis = fold_yflux_basal;
+            ymin = min_fold_basal;
+            ymax = max_fold_basal;
+            yaxis_label = 'Flux Fold-Change over basal level'
+        }
+
+    } else {
+        
+        var type = Number(document.getElementById("mySelect").value);
+        if (type == 1) {
+            yaxis = yflux; 
+            ymin = minflux;
+            ymax = maxflux;
+            yaxis_label = 'Flux (1/min)'
+        } else if (type == 2) {
+            yaxis = scaled_yflux;
+            ymin = min_scaled;
+            ymax = max_scaled;
+            yaxis_label = 'Percent of max flux'
+        } else if (type == 3) {
+            yaxis = fold_yflux;
+            ymin = min_fold;
+            ymax = max_fold;     
+            yaxis_label = 'Flux Fold-Change across titration'
+        } else if (type == 4) {
+            yaxis = fold_yflux_basal;
+            ymin = min_fold_basal;
+            ymax = max_fold_basal;
+            yaxis_label = 'Flux Fold-Change over basal level'
+        }
+    }
+    
+    var ctx = document.getElementById("myChart");
+    if (myChart) myChart.destroy();
+    myChart = new Chart(ctx, {
+ 
+        type: 'line',
+        data: {
+            labels: xaxis,
+            datasets: [{                                   
+                data: yaxis, fill:false, borderColor:'#000000'
+                }]
+        },
+        
+        options: {   
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        fontStyle: "bold",
+                        fontColor:"#000000",
+                        fontSize:16,
+                        labelString: xaxis_label
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 20,
+                        fontSize: 14,
+                        fontColor:"#000000",
+                        fontStyle: "bold"
+                    },
+                    gridLines: {
+                        display: true,
+                        color: "#CCCCCC"
+                    }
+                }],
+                yAxes: [{
+                    type: 'linear',
+                    position: 'left',
+                    scaleLabel: {
+                        display: true,
+                        fontStyle: "bold",
+                        fontColor:"#000000",
+                        fontSize:16,
+                        labelString: yaxis_label},
+                    ticks: {
+                        fontSize: 14,
+                        fontStyle: "bold",
+                        fontColor:"#000000",
+                        suggestedMin: ymin,
+                        suggestedMax: ymax
+                    },
+                    gridLines: {
+                        drawBorder: true,
+                        display: true,
+                        color: "#CCCCCC"
+                    }
+                }]
+            }
+        }
+    });
+}
+    
+function rePlot() {
+    plot_titration(0);
+}
+    
+function exportData() {  
+    xaxis.unshift(xaxis_label);
+    yaxis.unshift(yaxis_label);
+    var exporthis = [xaxis, yaxis];
+    alasql('SELECT * INTO CSV("data.csv") FROM ?', [exporthis]);
+}
+</script>

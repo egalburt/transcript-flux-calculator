@@ -1,0 +1,790 @@
+<html>
+    
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+    
+<body>
+
+<h1><center>TRANSCRIPT FLUX CALCULATOR 3: Regulation Across Promoter Space </center></h1>
+
+<div class="column">
+
+<div class="row" align="justify">
+
+    This calculator explores the phase space of gene regulation as a function of basal (unregulated) rates of transcription 
+    initiation. Unregulated rates are enetered below in the left column. The fold-change of each parameter generated upon regulation is in the second column and defines a fixed regulatory mechanism. Two basal parameters are selected using the drop-down menus. The X- and Y- parameters will be titrated geometrically from their input value to their input value times the X- and Y-multiplier respectively using the number of points. When the "GO" button is clicked, the mRNA flux fold-change for the defined regulatory mechanism applied to the defined set of basal parameters is calculated. The resulting plot is color coded to indicate regions of promoter space 
+    that will be activated (flux ratio > 1, green) or repressed (flux ratio < 1, red).
+    
+</div>
+<p></p>
+<div class="row">
+    <div class="minicolumnleft">
+        <div class="minicolumnright">
+             <font size=3><b>fold-change<br> in mechanism</b></font>
+        </div>
+    </div>
+</div>
+<p></p>
+
+<div class="row">
+
+  <div class="minicolumnleft">
+    <font size=5>
+        <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>on</sub></span>
+        <input type="number" min="0" step="0.01" id="onrate" value="0.1">
+            <div class="minicolumnright">
+        <input type="number" min="0" step="0.1" id="onfoldchange" value="1">
+            </div>
+  </div>
+        <div class="minicolumnright">
+        X-axis:
+        <select id="xAxisSelect">
+            <option value="1">on rate
+            <option value="2">off rate
+            <option selected="selected" value="3">opening rate
+            <option value="4">closing rate
+            <option value="5">escape rate
+            <option value="6">concentration
+        </select>
+        X-multiplier: <input type="number" min="2" step="1" id="xmult" value="100">
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>off</sub></span>
+    <input type="number" min="0" step="0.1" id="offrate" value="10">
+        <div class="minicolumnright">
+    <input type="number" min="0" step="0.1" id="offfoldchange" value="1">
+        </div>
+  </div>
+       <div class="minicolumnright">
+        Y-axis:
+        <select id="yAxisSelect">
+            <option value="1">on rate
+            <option value="2">off rate
+            <option value="3">opening rate
+            <option selected="selected" value="4">closing rate
+            <option value="5">escape rate
+            <option value="6">concentration
+        </select>
+        Y-multiplier: <input type="number" min="2" step="1" id="ymult" value="100">
+
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>open</sub></span>
+    <input type="number" min="0" step="0.1" id="openrate" value="1">
+        <div class="minicolumnright">
+    <input type="number" min="0" step="0.1" id="openfoldchange" value="1">
+        </div>
+  </div>
+      <div class="minicolumnright">
+        Number of Points: <input type="number" min="4" step="1" id="numberofpoints" value="100">
+      </div>
+</div>
+
+<p></p>
+    
+<div class="row">
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>close</sub></span>
+    <input type="number" min="0" step="0.1" id="closerate" value="0.1">
+        <div class="minicolumnright">
+    <input type="number" min="0" step="0.1" id="closefoldchange" value="1">
+        </div>
+  </div>
+      <div class="minicolumnright">
+        Log or Linear:
+        <select id="loglin">
+            <option value="1">log
+            <option value="2">linear
+        </select>
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+  <div class="minicolumnleft">
+    <b>k
+    <span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'>esc</sub></span>
+    <input type="number" min="0" step="0.1" id="escaperate" value="0.1">
+        <div class="minicolumnright">
+    <input type="number" min="0" step="0.1" id="escapefoldchange" value="1">
+        </div>
+  </div>
+      <div class="minicolumnright">
+          <button onclick="plot_mech()"><font size = 5><b>GO</b></font></button>
+      </div>
+</div>
+
+<p></p>
+
+<div class="row">
+  <div class="minicolumnleft">
+    <b>R<span class='supsub'>
+      <sup class='superscript'>basal</sup>
+      <sub class='subscript'><font color=#fff>0</font></sub></span>
+    <input type="number" min="0" step="0.1" id="concentration" value="1000">
+        <div class="minicolumnright">
+            <input type="number" min="0" step="0.1" id="concfoldchange" value="1">
+        </div>
+
+  </div>
+</div>
+</div>
+
+<div class="column">
+    <div id="tester" style="width:90%;height:500px;"></div>
+</div>
+      
+    
+</body>
+</html>
+
+
+<style type="text/css">
+
+* {
+    box-sizing: border-box;
+}
+    
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0px;
+}
+    
+/* Create two equal columns that float next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.minicolumnleft {
+    float: left;
+    width: 50%;
+}
+
+.minicolumnright {
+    float: right;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+input {
+    font-size: 24px;
+    width: 3em ;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+span.greybox {
+    color: #000000;
+    background: #aaa;
+    margin: 0 0 0 0;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: #000;
+}
+
+.supsub {
+    display: inline-block;
+}
+
+.supsub sup,
+.supsub sub {
+    position: relative;
+    display: block;
+    font-size: .5em;
+    line-height: 1.1;
+}
+
+.supsub sub {
+    top: .2em;
+}
+
+</style>
+
+
+<script>
+    
+function flux(nM, on, off, open, close, escape) {
+    var tpm = 60 * escape * Number(on*nM) / (Number(on*nM) + Number(open) + Number(off) - Number(open * (Number(close)-Number(on*nM)) / (Number(close)+Number(escape)) ) ) * (open/(Number(close)+Number(escape)));
+    return tpm.toFixed(3);
+} 
+
+function transpose(a) {
+
+  // Calculate the width and height of the Array
+  var w = a.length || 0;
+  var h = a[0] instanceof Array ? a[0].length : 0;
+
+  // In case it is a zero matrix, no transpose routine needed.
+  if(h === 0 || w === 0) { return []; }
+
+  /**
+   * @var {Number} i Counter
+   * @var {Number} j Counter
+   * @var {Array} t Transposed data is stored in this array.
+   */
+  var i, j, t = [];
+
+  // Loop through every item in the outer array (height)
+  for(i=0; i<h; i++) {
+
+    // Insert a new row (array)
+    t[i] = [];
+
+    // Loop through every item per item in outer array (width)
+    for(j=0; j<w; j++) {
+
+      // Save transposed data.
+      t[i][j] = a[j][i];
+    }
+  }
+
+  return t;
+}
+
+    
+function plot_mech() {
+    
+    var conc = document.getElementById("concentration").value;
+    var kon = document.getElementById("onrate").value;
+    var koff = document.getElementById("offrate").value;
+    var kopen = document.getElementById("openrate").value;
+    var kclose = document.getElementById("closerate").value;
+    var kescape = document.getElementById("escaperate").value;
+    
+    var onfold = document.getElementById("onfoldchange").value;
+    var offold = document.getElementById("offfoldchange").value;
+    var openfold = document.getElementById("openfoldchange").value;
+    var closefold = document.getElementById("closefoldchange").value;
+    var escapefold = document.getElementById("escapefoldchange").value;
+    var concfold = document.getElementById("concfoldchange").value;
+    
+    var X = document.getElementById("xAxisSelect").value;
+    var Y = document.getElementById("yAxisSelect").value;
+    var L = document.getElementById("loglin").value;
+    
+    var imult = document.getElementById("xmult").value;
+    var jmult = document.getElementById("ymult").value;
+    var points = document.getElementById("numberofpoints").value;
+    
+    var i,j;
+    //var points = 8;
+    
+    var ibase = Math.pow(Number(imult),1/points);
+    var jbase = Math.pow(Number(jmult),1/points);
+    
+    var basalflux = new Array(Number(points)+1);
+    var regflux = new Array(Number(points)+1);
+    var foldflux = new Array(Number(points)+1);
+    for (var b=0; b<=points; b++){
+        basalflux[b] = new Array(Number(points)+1);
+        regflux[b] = new Array(Number(points)+1);
+        foldflux[b] = new Array(Number(points)+1);
+    }
+
+    var xAxis = new Array(Number(points)+1);
+    var xAxisTitle;
+    var yAxis = new Array(Number(points)+1);
+    var yAxisTitle;
+    
+
+
+    if (X == 1) {
+        xAxisTitle = "k_on";
+        if (Y == 1){
+            window.alert('you must choose 2 different axes');
+        } else if (Y == 2) {
+            yAxisTitle = "k_off";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kon*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = koff*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon*Math.pow(ibase,i), koff*Math.pow(jbase,j), kopen, kclose, kescape);
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(ibase,i)*onfold, koff*Math.pow(jbase,j)*offold, kopen*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }    
+        } else if (Y == 3) {
+            yAxisTitle = "k_open";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kon*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kopen*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon*Math.pow(ibase,i), koff, kopen*Math.pow(jbase,j), kclose, kescape); 
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(ibase,i)*onfold, koff*offold, kopen*Math.pow(jbase,j)*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }  
+        } else if (Y == 4) {
+            yAxisTitle = "k_close";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kon*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kclose*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon*Math.pow(ibase,i), koff, kopen, kclose*Math.pow(jbase,j), kescape);
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(ibase,i)*onfold, koff*offold, kopen*openfold, kclose*Math.pow(jbase,j)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }      
+        } else if (Y == 5) {
+            yAxisTitle = "k_escape";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kon*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kescape*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon*Math.pow(ibase,i), koff, kopen, kclose, kescape*Math.pow(jbase,j)); 
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(ibase,i)*onfold, koff*offold, kopen*openfold, kclose*closefold, kescape*Math.pow(jbase,j)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }  
+        } else {
+            yAxisTitle = "concentration";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kon*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = conc*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(jbase,j), kon*Math.pow(ibase,i), koff, kopen, kclose, kescape); 
+                    regflux[i][j] = flux(conc*Math.pow(jbase,j)*concfold, kon*Math.pow(ibase,i)*onfold, koff*offold, kopen*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }     
+        }
+        
+    } else if (X == 2) {
+        xAxisTitle = "k_off";
+        if (Y == 1){
+            yAxisTitle = "k_on";
+            for (i=0; i<=points; i++){
+                xAxis[i] = koff*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kon*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon*Math.pow(jbase,j), koff*Math.pow(ibase,i), kopen, kclose, kescape);
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(jbase,j)*onfold, koff*Math.pow(ibase,i)*offold, kopen*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }
+        } else if (Y == 2) {
+            window.alert('you must choose 2 different axes');  
+        } else if (Y == 3) {
+            yAxisTitle = "k_open";
+            for (i=0; i<=points; i++){
+                xAxis[i] = koff*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kopen*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff*Math.pow(ibase,i), kopen*Math.pow(jbase,j), kclose, kescape);
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*Math.pow(ibase,i)*offold, kopen*Math.pow(jbase,j)*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }
+        } else if (Y == 4) {
+            yAxisTitle = "k_close";
+            for (i=0; i<=points; i++){
+                xAxis[i] = koff*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kclose*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff*Math.pow(ibase,i), kopen, kclose*Math.pow(jbase,j), kescape); 
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*Math.pow(ibase,i)*offold, kopen*openfold, kclose*Math.pow(jbase,j)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }
+        } else if (Y == 5) {
+            yAxisTitle = "k_escape";
+            for (i=0; i<=points; i++){
+                xAxis[i] = koff*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kescape*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff*Math.pow(ibase,i), kopen, kclose, kescape*Math.pow(jbase,j));  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*Math.pow(ibase,i)*offold, kopen*openfold, kclose*closefold, kescape*Math.pow(jbase,j)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }
+        } else {
+            yAxisTitle = "concentration";
+            for (i=0; i<=points; i++){
+                xAxis[i] = koff*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = conc*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(jbase,j), kon, koff*Math.pow(ibase,i), kopen, kclose, kescape);  
+                    regflux[i][j] = flux(conc*Math.pow(jbase,j)*concfold, kon*onfold, koff*Math.pow(ibase,i)*offold, kopen*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];
+                }
+            }        
+        }
+        
+    } else if (X == 3) {
+        xAxisTitle = "k_open";
+        if (Y == 1){
+            yAxisTitle = "k_on";
+           for (i=0; i<=points; i++){
+               xAxis[i] = kopen*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kon*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon*Math.pow(jbase,j), koff, kopen*Math.pow(ibase,i), kclose, kescape);  
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(jbase,j)*onfold, koff*offold, kopen*Math.pow(ibase,i)*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];        
+                }
+            } 
+        } else if (Y == 2) {
+            yAxisTitle = "k_off";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kopen*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = koff*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff*Math.pow(jbase,j), kopen*Math.pow(ibase,i), kclose, kescape);  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*Math.pow(jbase,j)*offold, kopen*Math.pow(ibase,i)*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }   
+        } else if (Y == 3) {
+            window.alert('you must choose 2 different axes');  
+        } else if (Y == 4) {
+            yAxisTitle = "k_close";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kopen*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kclose*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff, kopen*Math.pow(ibase,i), kclose*Math.pow(jbase,j), kescape);  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*offold, kopen*Math.pow(ibase,i)*openfold, kclose*Math.pow(jbase,j)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }    
+        } else if (Y == 5) {
+            yAxisTitle = "k_escape";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kopen*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kescape*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff, kopen*Math.pow(ibase,i), kclose, kescape*Math.pow(jbase,j));  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*offold, kopen*Math.pow(ibase,i)*openfold, kclose*closefold, kescape*Math.pow(jbase,j)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+        } else {
+            yAxisTitle = "concentration";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kopen*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = conc*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(jbase,j), kon, koff, kopen*Math.pow(ibase,i), kclose, kescape);  
+                    regflux[i][j] = flux(conc*Math.pow(jbase,j)*concfold, kon*onfold, koff*offold, kopen*Math.pow(ibase,i)*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }   
+        }
+        
+    } else if (X == 4) {
+        xAxisTitle = "k_close";
+        if (Y == 1){
+            yAxisTitle = "k_on";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kclose*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kon*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon*Math.pow(jbase,j), koff, kopen, kclose*Math.pow(ibase,i), kescape);  
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(jbase,j)*onfold, koff*offold, kopen*openfold, kclose*Math.pow(ibase,i)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                   
+                }
+            }
+        } else if (Y == 2) {
+            yAxisTitle = "k_off";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kclose*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = koff*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff*Math.pow(jbase,j), kopen, kclose*Math.pow(ibase,i), kescape);  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*Math.pow(jbase,j)*offold, kopen*openfold, kclose*Math.pow(ibase,i)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];        
+                }
+            }
+        } else if (Y == 3) {
+            yAxisTitle = "k_open";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kclose*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kopen*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff, kopen*Math.pow(jbase,j), kclose*Math.pow(ibase,i), kescape);  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*offold, kopen*Math.pow(jbase,j)*openfold, kclose*Math.pow(ibase,i)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                
+                }
+            }
+        } else if (Y == 4) {
+            window.alert('you must choose 2 different axes'); 
+        } else if (Y == 5) {
+            yAxisTitle = "k_escape";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kclose*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kescape*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff, kopen, kclose*Math.pow(ibase,i), kescape*Math.pow(jbase,j));  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*offold, kopen*openfold, kclose*Math.pow(ibase,i)*closefold, kescape*Math.pow(jbase,j)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                
+                }
+            }
+        } else {
+            yAxisTitle = "concentration";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kclose*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = conc*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(jbase,j), kon, koff, kopen, kclose*Math.pow(ibase,i), kescape);  
+                    regflux[i][j] = flux(conc*Math.pow(jbase,j)*concfold, kon*onfold, koff*offold, kopen*openfold, kclose*Math.pow(ibase,i)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                
+                }
+            }            
+        }
+
+    } else if (X == 5) {
+        xAxisTitle = "k_escape";
+        if (Y == 1){
+            yAxisTitle ="k_on";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kescape*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kon*Math.pow(jbase,j); 
+                    basalflux[i][j] = flux(conc, kon*Math.pow(jbase,j), koff, kopen, kclose, kescape*Math.pow(ibase,i));  
+                    regflux[i][j] = flux(conc*concfold, kon*Math.pow(jbase,j)*onfold, koff*offold, kopen*openfold, kclose*closefold, kescape*Math.pow(ibase,i)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+        } else if (Y == 2) {
+            yAxisTitle = "k_off";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kescape*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = koff*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff*Math.pow(jbase,j), kopen, kclose, kescape*Math.pow(ibase,i));  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*Math.pow(jbase,j)*offold, kopen*openfold, kclose*closefold, kescape*Math.pow(ibase,i)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+            
+        } else if (Y == 3) {
+            yAxisTitle = "k_open";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kescape*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kopen*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff, kopen*Math.pow(jbase,j), kclose, kescape*Math.pow(ibase,i));  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*offold, kopen*Math.pow(jbase,j)*openfold, kclose*closefold, kescape*Math.pow(ibase,i)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+        } else if (Y == 4) {
+            yAxisTitle = "k_close";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kescape*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kclose*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc, kon, koff, kopen, kclose*Math.pow(jbase,j), kescape*Math.pow(ibase,i));  
+                    regflux[i][j] = flux(conc*concfold, kon*onfold, koff*offold, kopen*openfold, kclose*Math.pow(jbase,j)*closefold, kescape*Math.pow(ibase,i)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+        } else if (Y == 5) {
+            window.alert('you must choose 2 different axes'); 
+        } else {
+            yAxisTitle = "concentration";
+            for (i=0; i<=points; i++){
+                xAxis[i] = kescape*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = conc*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(jbase,j), kon, koff, kopen, kclose, kescape*Math.pow(ibase,i));  
+                    regflux[i][j] = flux(conc*Math.pow(jbase,j)*concfold, kon*onfold, koff*offold, kopen*openfold, kclose*closefold, kescape*Math.pow(ibase,i)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            } 
+        }
+        
+    } else {
+        xAxisTitle = "concentration";
+        if (Y == 1){
+            yAxisTitle = "k_on";
+            for (i=0; i<=points; i++){
+                xAxis[i] = conc*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kon*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(ibase,i), kon*Math.pow(jbase,j), koff, kopen, kclose, kescape);  
+                    regflux[i][j] = flux(conc*Math.pow(ibase,i)*concfold, kon*Math.pow(jbase,j)*onfold, koff*offold, kopen*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+        } else if (Y == 2) {
+            yAxisTitle = "k_off";
+            for (i=0; i<=points; i++){
+                xAxis[i] = conc*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = koff*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(ibase,i), kon, koff*Math.pow(jbase,j), kopen, kclose, kescape);  
+                    regflux[i][j] = flux(conc*Math.pow(ibase,i)*concfold, kon*onfold, koff*Math.pow(jbase,j)*offold, kopen*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+            
+        } else if (Y == 3) {
+            yAxisTitle = "k_open";
+            for (i=0; i<=points; i++){
+                xAxis[i] = conc*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kopen*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(ibase,i), kon, koff, kopen*Math.pow(jbase,j), kclose, kescape);  
+                    regflux[i][j] = flux(conc*Math.pow(ibase,i)*concfold, kon*onfold, koff*offold, kopen*Math.pow(jbase,j)*openfold, kclose*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+        } else if (Y == 4) {
+            yAxisTitle = "k_close";
+            for (i=0; i<=points; i++){
+                xAxis[i] = conc*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kclose*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(ibase,i), kon, koff, kopen, kclose*Math.pow(jbase,j), kescape);  
+                    regflux[i][j] = flux(conc*Math.pow(ibase,i)*concfold, kon*onfold, koff*offold, kopen*openfold, kclose*Math.pow(jbase,j)*closefold, kescape*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            }
+        } else if (Y == 5) {
+            yAxisTitle = "k_escape";
+            for (i=0; i<=points; i++){
+                xAxis[i] = conc*Math.pow(ibase,i);
+                for (j=0; j<=points; j++){
+                    yAxis[j] = kescape*Math.pow(jbase,j);
+                    basalflux[i][j] = flux(conc*Math.pow(ibase,i), kon, koff, kopen, kclose, kescape*Math.pow(jbase,j));  
+                    regflux[i][j] = flux(conc*Math.pow(ibase,i)*concfold, kon*onfold, koff*offold, kopen*openfold, kclose*closefold, kescape*Math.pow(jbase,j)*escapefold);
+                    foldflux[i][j] = regflux[i][j]/basalflux[i][j];                 
+                }
+            } 
+        }
+        else {
+            window.alert('you must choose 2 different axes'); 
+        }
+    }
+
+    transfoldflux = transpose(foldflux);
+
+    var maxRow = foldflux.map(function(row2){return Math.max.apply(Math, row2); });
+    var minRow = foldflux.map(function(row2){return Math.min.apply(Math, row2); });
+    var max = Math.max.apply(null, maxRow);
+    var min = Math.min.apply(null, minRow);
+    
+    
+    if (max < 1) {
+        var r = 255*min;
+        var colorArray = [
+            [0,'rgb(255,'+r+','+r+')'],
+            [1,'rgb(255,255,255)']
+        ]
+    } else if (min > 1){
+        var g = 255/max;
+        var colorArray = [
+            [0,'rgb(255,255,255)'],
+            [1,'rgb('+g+',255,'+g+')']
+        ]
+    } else {
+        var r = 255*min;
+        var g = 255/max;
+        var one = (1-min)/(max-min);
+        var colorArray = [
+            [0,'rgb(255,'+r+','+r+')'],
+            [one,'rgb(255,255,255)'],
+            [1,'rgb('+g+',255,'+g+')']
+        ]  
+    }
+    
+    
+    
+    var data = [ {  
+		z: transfoldflux,
+		x: xAxis,
+		y: yAxis,
+        type: 'contour',
+        line: {
+            smoothing: 0
+        },
+        colorscale: colorArray,
+        colorbar:{
+            title: 'Flux Ratio',
+            titleside: 'left',
+	    },
+    }
+    ];
+
+    if (L == 1 ) {
+            var layout = {
+            title: 'Flux Ratio vs. basal rates',
+            xaxis: {
+              type: 'log',
+              linewidth: 2,
+              title: xAxisTitle
+            },
+            yaxis: {
+              type: 'log',
+              linewidth: 2,
+              title: yAxisTitle
+            }
+        };
+    } else {
+            var layout = {
+            title: 'Flux Ratio vs. basal rates',
+            xaxis: {
+              type: 'lin',
+              linewidth: 2,
+              title: xAxisTitle
+            },
+            yaxis: {
+              type: 'lin',
+              linewidth: 2,
+              title: yAxisTitle
+            }
+        };
+    }
+
+Plotly.newPlot(document.getElementById('tester'), data, layout);
+    
+}
+    
+</script>
