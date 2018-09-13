@@ -21,7 +21,7 @@
     
 </div>
 <div class="row" align="center">
-    <img id="imgDisp" src="scheme.png">
+    <img id="imgDisp" src="images/scheme.png">
 </div>
     <p></p>
 <div class="row">
@@ -33,7 +33,7 @@
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>on</sub></span>
             <input type="number" min="0.01" step="0.01" id="onrate" value="0.1"> <font size=4>nM<sup class='superscript'>-1</sup>s<sup class='superscript'>-1</sup></font> 
-            <button onclick="plot_titration(1,'konimage.png')">Titrate k<sub class='subscript'>on</sub></button>    
+            <button onclick="plot_titration(1,'images/konimage.png')">Titrate k<sub class='subscript'>on</sub></button>    
   </div>
         <div class="minicolumnright">
             <b>titration minimum <input type="number" min="0.01" step="0.01" id="titrate_min" value="1">            
@@ -50,7 +50,7 @@
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>off</sub></span>
         <input type="number" min="0.01" step="0.01" id="offrate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
-    <button onclick="plot_titration(2,'koffimage.png')">Titrate k<sub class='subscript'>off</sub></button>
+    <button onclick="plot_titration(2,'images/koffimage.png')">Titrate k<sub class='subscript'>off</sub></button>
   </div>
       <div class="minicolumnright">
             <b>titration maximum <input type="number" min="0.01" step="0.01" id="titrate_max" value="100">            
@@ -67,7 +67,7 @@
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>open</sub></span>
         <input type="number" min="0.01" step="0.01" id="openrate" value="1"> <font size=4>s<sup class='superscript'>-1</sup></font>
-    <button onclick="plot_titration(3,'kopenimage.png')">Titrate k<sub class='subscript'>open</sub></button>
+    <button onclick="plot_titration(3,'images/kopenimage.png')">Titrate k<sub class='subscript'>open</sub></button>
   </div>
       <div class="minicolumnright">
             <b>titration resolution <input type="number" min="0.01" step="0.01" id="titrate_res" value="10">            
@@ -83,7 +83,7 @@
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>close</sub></span>
         <input type="number" min="0.01" step="0.01" id="closerate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
-    <button onclick="plot_titration(4,'kcloseimage.png')">Titrate k<sub class='subscript'>close</sub></button>
+    <button onclick="plot_titration(4,'images/kcloseimage.png')">Titrate k<sub class='subscript'>close</sub></button>
   </div>
       <div class="minicolumnright">
         Y-axis scale:
@@ -105,7 +105,7 @@
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>esc</sub></span>
         <input type="number" min="0.01" step="0.01" id="escaperate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
-    <button onclick="plot_titration(5,'kescapeimage.png')">Titrate k<sub class='subscript'>escape</sub></button>
+    <button onclick="plot_titration(5,'images/kescapeimage.png')">Titrate k<sub class='subscript'>escape</sub></button>
   </div>
       <div class="minicolumnright">
           <button onclick="exportData()">download titration data in CSV format</button>
@@ -120,7 +120,7 @@
       <sup class='superscript'>basal</sup>
       <sub class='subscript'><font color=#fff>0</font></sub></span>
         <input type="number" min="0.01" step="0.01" id="concentration" value="1000"> <font size=4>nM</font>
-    <button onclick="plot_titration(6,'Rimage.png')">Titrate [R]</button>
+    <button onclick="plot_titration(6,'images/Rimage.png')">Titrate [R]</button>
   </div>
 </div>
 </div>
