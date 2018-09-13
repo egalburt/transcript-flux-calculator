@@ -17,7 +17,7 @@
     
 </div>
 <div class="row" align="center">
-    <img id="imgDisp" src="scheme.png">
+    <img id="imgDisp" src="/images/scheme.png">
 </div>
 <p></p>
 <div class="row">
@@ -342,7 +342,7 @@ function plot_mech() {
             window.alert('you must choose 2 different axes');
         } else if (Y == 2) {
             yAxisTitle = "k_off";
-            image.src = "onoffimage.png";
+            image.src = "images/onoffimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kon*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -354,7 +354,7 @@ function plot_mech() {
             }    
         } else if (Y == 3) {
             yAxisTitle = "k_open";
-            image.src = "onopenimage.png";
+            image.src = "images/onopenimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kon*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -366,7 +366,7 @@ function plot_mech() {
             }  
         } else if (Y == 4) {
             yAxisTitle = "k_close";
-            image.src = "oncloseimage.png";
+            image.src = "images/oncloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kon*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -378,7 +378,7 @@ function plot_mech() {
             }      
         } else if (Y == 5) {
             yAxisTitle = "k_escape";
-            image.src = "onescapeimage.png";
+            image.src = "images/onescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kon*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -390,7 +390,7 @@ function plot_mech() {
             }  
         } else {
             yAxisTitle = "concentration";
-            image.src = "Ronimage.png";
+            image.src = "images/Ronimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kon*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -406,7 +406,7 @@ function plot_mech() {
         xAxisTitle = "k_off";
         if (Y == 1){
             yAxisTitle = "k_on";
-            image.src = "onoffimage.png";
+            image.src = "images/onoffimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = koff*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -420,7 +420,7 @@ function plot_mech() {
             window.alert('you must choose 2 different axes');  
         } else if (Y == 3) {
             yAxisTitle = "k_open";
-            image.src = "offopenimage.png";
+            image.src = "images/offopenimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = koff*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -432,7 +432,7 @@ function plot_mech() {
             }
         } else if (Y == 4) {
             yAxisTitle = "k_close";
-            image.src = "offcloseimage.png";
+            image.src = "images/offcloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = koff*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -444,7 +444,7 @@ function plot_mech() {
             }
         } else if (Y == 5) {
             yAxisTitle = "k_escape";
-            image.src = "offescapeimage.png";
+            image.src = "images/offescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = koff*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -456,7 +456,7 @@ function plot_mech() {
             }
         } else {
             yAxisTitle = "concentration";
-            image.src = "Roffimage.png";
+            image.src = "images/Roffimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = koff*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -472,7 +472,7 @@ function plot_mech() {
         xAxisTitle = "k_open";
         if (Y == 1){
             yAxisTitle = "k_on";
-            image.src = "onopenimage.png";
+            image.src = "images/onopenimage.png";
            for (i=0; i<=points; i++){
                xAxis[i] = kopen*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -484,7 +484,7 @@ function plot_mech() {
             } 
         } else if (Y == 2) {
             yAxisTitle = "k_off";
-            image.src = "offopenimage.png";
+            image.src = "images/offopenimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kopen*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -498,7 +498,7 @@ function plot_mech() {
             window.alert('you must choose 2 different axes');  
         } else if (Y == 4) {
             yAxisTitle = "k_close";
-            image.src = "opencloseimage.png";
+            image.src = "images/opencloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kopen*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -510,7 +510,7 @@ function plot_mech() {
             }    
         } else if (Y == 5) {
             yAxisTitle = "k_escape";
-            image.src = "openescapeimage.png";
+            image.src = "images/openescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kopen*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -522,7 +522,7 @@ function plot_mech() {
             }
         } else {
             yAxisTitle = "concentration";
-            image.src = "Ropenimage.png";
+            image.src = "images/Ropenimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kopen*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -538,7 +538,7 @@ function plot_mech() {
         xAxisTitle = "k_close";
         if (Y == 1){
             yAxisTitle = "k_on";
-            image.src = "oncloseimage.png";
+            image.src = "images/oncloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kclose*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -550,7 +550,7 @@ function plot_mech() {
             }
         } else if (Y == 2) {
             yAxisTitle = "k_off";
-            image.src = "offcloseimage.png";
+            image.src = "images/offcloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kclose*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -562,7 +562,7 @@ function plot_mech() {
             }
         } else if (Y == 3) {
             yAxisTitle = "k_open";
-            image.src = "opencloseimage.png";
+            image.src = "images/opencloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kclose*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -576,7 +576,7 @@ function plot_mech() {
             window.alert('you must choose 2 different axes'); 
         } else if (Y == 5) {
             yAxisTitle = "k_escape";
-            image.src = "closeescapeimage.png";
+            image.src = "images/closeescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kclose*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -588,7 +588,7 @@ function plot_mech() {
             }
         } else {
             yAxisTitle = "concentration";
-            image.src = "Rcloseimage.png";
+            image.src = "images/Rcloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kclose*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -604,7 +604,7 @@ function plot_mech() {
         xAxisTitle = "k_escape";
         if (Y == 1){
             yAxisTitle ="k_on";
-            image.src = "onescapeimage.png";
+            image.src = "images/onescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kescape*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -616,7 +616,7 @@ function plot_mech() {
             }
         } else if (Y == 2) {
             yAxisTitle = "k_off";
-            image.src = "offescapeimage.png";
+            image.src = "images/offescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kescape*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -629,7 +629,7 @@ function plot_mech() {
             
         } else if (Y == 3) {
             yAxisTitle = "k_open";
-            image.src = "openescapeimage.png";
+            image.src = "images/openescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kescape*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -641,7 +641,7 @@ function plot_mech() {
             }
         } else if (Y == 4) {
             yAxisTitle = "k_close";
-            image.src = "closeescapeimage.png";
+            image.src = "images/closeescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kescape*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -655,7 +655,7 @@ function plot_mech() {
             window.alert('you must choose 2 different axes'); 
         } else {
             yAxisTitle = "concentration";
-            image.src = "Rescapeimage.png";
+            image.src = "images/Rescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = kescape*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -671,7 +671,7 @@ function plot_mech() {
         xAxisTitle = "concentration";
         if (Y == 1){
             yAxisTitle = "k_on";
-            image.src = "Ronimage.png";
+            image.src = "images/Ronimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = conc*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -683,7 +683,7 @@ function plot_mech() {
             }
         } else if (Y == 2) {
             yAxisTitle = "k_off";
-            image.src = "Roffimage.png";
+            image.src = "images/Roffimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = conc*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -696,7 +696,7 @@ function plot_mech() {
             
         } else if (Y == 3) {
             yAxisTitle = "k_open";
-            image.src = "Ropenimage.png";
+            image.src = "images/Ropenimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = conc*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -708,7 +708,7 @@ function plot_mech() {
             }
         } else if (Y == 4) {
             yAxisTitle = "k_close";
-            image.src = "Rcloseimage.png";
+            image.src = "images/Rcloseimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = conc*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
@@ -720,7 +720,7 @@ function plot_mech() {
             }
         } else if (Y == 5) {
             yAxisTitle = "k_escape";
-            image.src = "Rescapeimage.png";
+            image.src = "images/Rescapeimage.png";
             for (i=0; i<=points; i++){
                 xAxis[i] = conc*Math.pow(ibase,i);
                 for (j=0; j<=points; j++){
