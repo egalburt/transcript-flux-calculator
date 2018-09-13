@@ -13,12 +13,15 @@
 
 <div class="row" align="justify">
     
-    This calculator determines mRNA flux as a function of one of the rate constants or polymerase concentration. 
-    This may be useful for judging the relative importance of individual rates given a set of rates. After parameters for
+    This calculator determines mRNA flux as a function of one of the rate constants (1/s) or polymerase concentration ([R], nM). 
+    This may be useful for judging the relative importance of individual rate constants given a particular mechanism. After parameters for
     a promoter of interest are entered in the boxes below, the buttons may be pushed to perform a titration of an individual parameter. The
     range of the titration of that particular parameter and the resolution of the titration are entered to the right. A plot will appear to the right displaying the titration
     using the y-axis scale selected from the dropdown menu. The resulting data can be downloaded in semi-colon separated format.
     
+</div>
+<div class="row" align="center">
+    <img id="imgDisp" src="scheme.png">
 </div>
     <p></p>
 <div class="row">
@@ -29,8 +32,8 @@
     <span class='supsub'>
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>on</sub></span>
-        <input type="number" min="0.01" step="0.01" id="onrate" value="0.1">
-        <button onclick="plot_titration(1)">Titrate On Rate</button>    
+            <input type="number" min="0.01" step="0.01" id="onrate" value="0.1"> <font size=4>nM<sup class='superscript'>-1</sup>s<sup class='superscript'>-1</sup></font> 
+            <button onclick="plot_titration(1,'konimage.png')">Titrate k<sub class='subscript'>on</sub></button>    
   </div>
         <div class="minicolumnright">
             <b>titration minimum <input type="number" min="0.01" step="0.01" id="titrate_min" value="1">            
@@ -46,8 +49,8 @@
     <span class='supsub'>
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>off</sub></span>
-    <input type="number" min="0.01" step="0.01" id="offrate" value="10">
-    <button onclick="plot_titration(2)">Titrate Off Rate</button>
+        <input type="number" min="0.01" step="0.01" id="offrate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
+    <button onclick="plot_titration(2,'koffimage.png')">Titrate k<sub class='subscript'>off</sub></button>
   </div>
       <div class="minicolumnright">
             <b>titration maximum <input type="number" min="0.01" step="0.01" id="titrate_max" value="100">            
@@ -63,8 +66,8 @@
     <span class='supsub'>
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>open</sub></span>
-    <input type="number" min="0.01" step="0.01" id="openrate" value="1">
-    <button onclick="plot_titration(3)">Titrate Open Rate</button>
+        <input type="number" min="0.01" step="0.01" id="openrate" value="1"> <font size=4>s<sup class='superscript'>-1</sup></font>
+    <button onclick="plot_titration(3,'kopenimage.png')">Titrate k<sub class='subscript'>open</sub></button>
   </div>
       <div class="minicolumnright">
             <b>titration resolution <input type="number" min="0.01" step="0.01" id="titrate_res" value="10">            
@@ -79,8 +82,8 @@
     <span class='supsub'>
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>close</sub></span>
-    <input type="number" min="0.01" step="0.01" id="closerate" value="10">
-    <button onclick="plot_titration(4)">Titrate Close Rate</button>
+        <input type="number" min="0.01" step="0.01" id="closerate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
+    <button onclick="plot_titration(4,'kcloseimage.png')">Titrate k<sub class='subscript'>close</sub></button>
   </div>
       <div class="minicolumnright">
         Y-axis scale:
@@ -101,11 +104,11 @@
     <span class='supsub'>
       <sup class='superscript'>basal</sup>
       <sub class='subscript'>esc</sub></span>
-    <input type="number" min="0.01" step="0.01" id="escaperate" value="10">
-    <button onclick="plot_titration(5)">Titrate Escape Rate</button>
+        <input type="number" min="0.01" step="0.01" id="escaperate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
+    <button onclick="plot_titration(5,'kescapeimage.png')">Titrate k<sub class='subscript'>escape</sub></button>
   </div>
       <div class="minicolumnright">
-          <button onclick="exportData()">Download</button>
+          <button onclick="exportData()">download titration data in CSV format</button>
       </div>
 </div>
 
@@ -116,8 +119,8 @@
     <b>[R]<span class='supsub'>
       <sup class='superscript'>basal</sup>
       <sub class='subscript'><font color=#fff>0</font></sub></span>
-    <input type="number" min="0.01" step="0.01" id="concentration" value="1000">
-    <button onclick="plot_titration(6)">Titrate Concentration</button>
+        <input type="number" min="0.01" step="0.01" id="concentration" value="1000"> <font size=4>nM</font>
+    <button onclick="plot_titration(6,'Rimage.png')">Titrate [R]</button>
   </div>
 </div>
 </div>
@@ -239,7 +242,10 @@ function flux(nM, on, off, open, close, escape) {
 Chart.defaults.global.legend.display = false;
 Chart.defaults.global.xAxes = false;
     
-function plot_titration(input) {
+function plot_titration(input, imgName) {
+    
+    image = document.getElementById('imgDisp');
+    image.src = imgName;
     
     var conc = document.getElementById("concentration").value;
     var kon = document.getElementById("onrate").value;
@@ -263,7 +269,7 @@ function plot_titration(input) {
             xaxis.push(parseFloat(i.toFixed(1)));
             if (input == 1){
                 yflux.push(flux(conc, i, koff, kopen, kclose, kescape));
-                xaxis_label = 'k_on (1/s)';
+                xaxis_label = 'k_on (1/nM.s)';
                 }
             else if (input == 2){
                 yflux.push(flux(conc, kon, i, kopen, kclose, kescape));
@@ -436,4 +442,5 @@ function exportData() {
     var exporthis = [xaxis, yaxis];
     alasql('SELECT * INTO CSV("data.csv") FROM ?', [exporthis]);
 }
+
 </script>

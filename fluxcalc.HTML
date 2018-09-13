@@ -12,9 +12,11 @@
 
 <div class="row" align="justify">
     
-    This calculator explores the effects of different combinations of basal (unregulated) and regulated rates on transcript
-    flux. The initiation mechanism consists of three states: free promoter (R+P), closed complex (RP<sub><small>c</small></sub>), and open complex (RP<sub><small>o</small></sub>) with reversible transitions between R+P, RP<sub><small>c</small></sub> , and RP<sub><small>o</small></sub>. From open complex, the polymerase may irreversibly escape the promoter resulting in a free promoter and an mRNA transcript. The concentration of the polymerase ([R], nM) is modeled explicitly. First, enter basal rate constants for the promoter of interest in the boxes below (1/s). The flux control coefficients determined by the set of basal rate constants will be displayed (C<sup><small>&phi;</small></sup>). Second, move the slider bars to set how that particular parameter will be regulated. The output will be displayed on the right in real time. Both the basal and regulated mRNA flux and the flux ratio are reported numerically. In addition, the area of the circle represents the flux ratio graphically with larger green circles indicating activation and smaller red circles indicating repression. Lastly, the relative free energy landscapes depicting the state and transition states are plotted for comparison in units of ln(1/s). <em>See Reference for more information.</em>
-    
+    This calculator explores the effects of different combinations of basal (unregulated) and regulated rate constants on transcript
+    flux. The initiation mechanism consists of three states: free promoter (R+P), closed complex (RP<sub><small>c</small></sub>), and open complex (RP<sub><small>o</small></sub>) with reversible transitions between R+P, RP<sub><small>c</small></sub> , and RP<sub><small>o</small></sub> as is indicated in the schematic below. From open complex, the polymerase may irreversibly escape the promoter resulting in a free promoter and an mRNA transcript. The concentration of the polymerase ([R], nM) is modeled explicitly and is assumed to be constant. First, enter basal rate constants for the promoter of interest in the boxes below (1/s). The flux control coefficients determined by the set of basal rate constants will be displayed (C<sup><small>&phi;</small></sup>). Second, move the slider bars to set how that particular parameter will be regulated. The output will be displayed on the right in real time. Both the basal and regulated mRNA flux and the flux ratio are reported numerically. In addition, the area of the circle represents the flux ratio graphically with larger green circles indicating activation and smaller red circles indicating repression. Lastly, the relative free energy landscapes depicting the state and transition states are plotted for comparison. The prefactor is assumed to be 1000 1/s and RT is 0.616 at 37C. <em>See Reference for more information.</em>
+</div> 
+<div class="row" align="center">
+    <img src="scheme.png">
 </div>
 <p></p>
 <div class="row">
@@ -23,8 +25,8 @@
     <font size=5>
     <b>k<span class='supsub'>
       <sup class='superscript'>basal</sup>
-      <sub class='subscript'>on</sub></b></span>
-        <input type="number" min="0.01" step="0.01" id="onrate" value="0.1">
+      <sub class='subscript'>on</sub></span>
+        <input type="number" min="0.01" step="0.01" id="onrate" value="0.1"> <font size=4>nM<sup class='superscript'>-1</sup>s<sup class='superscript'>-1</sup></font>
         &nbsp;&nbsp;&nbsp;C<span class='supsub'>
       <sup class='superscript'>&phi;</sup>
         <sub class='subscript'>on</sub></b></span> <span class="greyboxlight" id="CCkon"></span>
@@ -35,7 +37,7 @@
     <b>k<span class='supsub'>
       <sup class='superscript' align="left">reg</sup>
       <sub class='subscript' align="left">on</sub></b></span>
-    <span class="greyboxdark" id="onnew"></span>
+    <span class='greyboxdark' id="onnew"></span>
   </div>
 
   <div id="slidecontainer">
@@ -50,8 +52,8 @@
   <div class="minicolumnleft">
     <b>k<span class='supsub'>
       <sup class='superscript'>basal</sup>
-      <sub class='subscript'>off</sub></b></span>
-    <input type="number" min="0.01" step="0.01" id="offrate" value="10">
+      <sub class='subscript'>off</sub></span>
+      <input type="number" min="0.01" step="0.01" id="offrate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
       &nbsp;&nbsp;&nbsp;C<span class='supsub'>
       <sup class='superscript'>&phi;</sup>
       <sub class='subscript'>off</sub></b></span> <span class="greyboxlight" id="CCkoff"></span>
@@ -76,8 +78,8 @@
   <div class="minicolumnleft">
     <b>k<span class='supsub'>
       <sup class='superscript'>basal</sup>
-      <sub class='subscript'>open</sub></b></span>
-    <input type="number" min="0.000001" step="0.000001" id="openrate" value="1">
+      <sub class='subscript'>open</sub></span>
+      <input type="number" min="0.000001" step="0.000001" id="openrate" value="1"> <font size=4>s<sup class='superscript'>-1</sup></font>
       &nbsp;&nbsp;&nbsp;C<span class='supsub'>
       <sup class='superscript'>&phi;</sup>
       <sub class='subscript'>open</sub></b></span> <span class="greyboxlight" id="CCkopen"></span>
@@ -102,8 +104,8 @@
   <div class="minicolumnleft">
     <b>k<span class='supsub'>
       <sup class='superscript'>basal</sup>
-      <sub class='subscript'>close</sub></b></span>
-    <input type="number" min="0.000001" step="0.000001" id="closerate" value="10">
+      <sub class='subscript'>close</sub></span>
+      <input type="number" min="0.000001" step="0.000001" id="closerate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
       &nbsp;&nbsp;&nbsp;C<span class='supsub'>
       <sup class='superscript'>&phi;</sup>
       <sub class='subscript'>close</sub></b></span> <span class="greyboxlight" id="CCkclose"></span>
@@ -128,8 +130,8 @@
   <div class="minicolumnleft">
     <b>k<span class='supsub'>
     <sup class='superscript'>basal</sup>
-    <sub class='subscript'>escape</sub></b></span>
-    <input type="number" min="0.000001" step="0.000001" id="escaperate" value="10">
+    <sub class='subscript'>escape</sub></span>
+      <input type="number" min="0.000001" step="0.000001" id="escaperate" value="10"> <font size=4>s<sup class='superscript'>-1</sup></font>
       &nbsp;&nbsp;&nbsp;C<span class='supsub'>
       <sup class='superscript'>&phi;</sup>
       <sub class='subscript'>escape</sub></b></span> <span class="greyboxlight" id="CCkescape"></span>
@@ -154,8 +156,8 @@
   <div class="minicolumnleft">
     <b>[R]<span class='supsub'>
       <sup class='superscript'>basal</sup>
-      <sub class='subscript'><font color=#fff>0</font></sub></b></span>
-    <input type="number" min="0.01" step="0.01" id="concentration" value="1000">
+      <sub class='subscript'><font color=#fff>0</font></sub></span>
+      <input type="number" min="0.01" step="0.01" id="concentration" value="1000"> <font size=4>nM</font>
       &nbsp;&nbsp;&nbsp;C<span class='supsub'>
       <sup class='superscript'>&phi;</sup>
       <sub class='subscript'>[R]</sub></b></span> <span class="greyboxlight" id="CCR"></span>
@@ -288,6 +290,28 @@ span.greyboxdark {
     padding: 5px 5px 1px 5px;
 }
     
+span.redbox {  
+    color: #000000;
+    background: #C00;
+    margin: 0 0 0 0;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: #000;
+    padding: 5px 5px 1px 5px;
+}
+    
+span.greenbox {  
+    color: #000000;
+    background: #0C0;
+    margin: 0 0 0 0;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: #000;
+    padding: 5px 5px 1px 5px;
+}    
+    
 span.greyboxlight {
     color: #000000;
     background: #ccc;
@@ -334,7 +358,7 @@ span.greyboxlight {
 
   var onslider = document.getElementById("onratio");
   var onoutput = document.getElementById("onnew");
-
+    
   var offslider = document.getElementById("offratio");
   var offoutput = document.getElementById("offnew");
 
@@ -350,11 +374,12 @@ span.greyboxlight {
   var bFLUX = flux(conc, kon, koff, kopen, kclose, kescape);
   var rFLUX = flux(conc*concslider.value, kon*onslider.value, koff*offslider.value, kopen*openslider.value, kclose*closeslider.value, kescape*escapeslider.value);
 
-  var A = 1000;
+  var A = 6000000000000; //kinetic prefactor (1/s)
+  var RT = 0.616; //RT at 37 C (kcal/mol)
     
-  var bDATA = [2,0,-Math.log(kon*conc/A),-Math.log(kon*conc/A)+Math.log(koff/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A)-Math.log(kescape/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A)-Math.log(kescape/A)-5];
+  var bDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
     
-  var rDATA = [2,0,-Math.log(kon*conc/A),-Math.log(kon*conc/A)+Math.log(koff/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A)-Math.log(kescape/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A)-Math.log(kescape/A)-5];
+  var rDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
     
   var k1 = parseFloat(kon);
   var k2 = parseFloat(koff);
@@ -570,7 +595,7 @@ var retext;
                 },
             scaleLabel: {
                     display:true,
-                    labelString: "Free Energy (ln(1/s))",
+                    labelString: "Free Energy (kcal/mol)",
                     fontSize: 14,
                     fontColor:"#000000"
                 }
@@ -646,9 +671,9 @@ var retext;
         draw(255,0,0,(Number(bFLUX)-Number(rFLUX))/(Number(rFLUX)+Number(bFLUX)),rFLUX/bFLUX*50,rFLUX/bFLUX,bFLUX,rFLUX);
       }
 
-      bDATA = [2,0,-Math.log(kon*conc/1000),-Math.log(kon*conc/A)+Math.log(koff/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A)-Math.log(kescape/A),-Math.log(kon*conc/A)+Math.log(koff/A)-Math.log(kopen/A)+Math.log(kclose/A)-Math.log(kescape/A)-5];
+      bDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
       
-    rDATA = [2,0,-Math.log(kon*onslider.value*conc*concslider.value/1000),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A)+Math.log(kclose*closeslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A)+Math.log(kclose*closeslider.value/A)-Math.log(kescape*escapeslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A)+Math.log(kclose*closeslider.value/A)-Math.log(kescape*escapeslider.value/A)-5];
+      rDATA = [2,0,-RT*Math.log(kon*onslider.value*conc*concslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A)+RT*Math.log(kclose*closeslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A)+RT*Math.log(kclose*closeslider.value/A)-RT*Math.log(kescape*escapeslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A)+RT*Math.log(kclose*closeslider.value/A)-RT*Math.log(kescape*escapeslider.value/A)-5];
       
       if (rFLUX/bFLUX <= 1) {
         plot(bDATA,rDATA,'#ff0000');
@@ -672,7 +697,7 @@ var retext;
         draw(255,0,0,(Number(bFLUX)-Number(rFLUX))/(Number(rFLUX)+Number(bFLUX)),rFLUX/bFLUX*50,rFLUX/bFLUX,bFLUX,rFLUX);
       }
 
-      rDATA = [2,0,-Math.log(kon*onslider.value*conc*concslider.value/1000),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A)+Math.log(kclose*closeslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A)+Math.log(kclose*closeslider.value/A)-Math.log(kescape*escapeslider.value/A),-Math.log(kon*onslider.value*conc*concslider.value/A)+Math.log(koff*offslider.value/A)-Math.log(kopen*openslider.value/A)+Math.log(kclose*closeslider.value/A)-Math.log(kescape*escapeslider.value/A)-5];
+      rDATA = [2,0,-RT*Math.log(kon*onslider.value*conc*concslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A)+RT*Math.log(kclose*closeslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A)+RT*Math.log(kclose*closeslider.value/A)-RT*Math.log(kescape*escapeslider.value/A),-RT*Math.log(kon*onslider.value*conc*concslider.value/A)+RT*Math.log(koff*offslider.value/A)-RT*Math.log(kopen*openslider.value/A)+RT*Math.log(kclose*closeslider.value/A)-RT*Math.log(kescape*escapeslider.value/A)-5];
       if (rFLUX/bFLUX <= 1) {
         plot(bDATA,rDATA,'#ff0000');
       } else {
@@ -703,20 +728,47 @@ var retext;
   // Update the current slider value (each time you drag the slider handle)
   onslider.oninput = function() {
       onoutput.innerHTML = Math.round(kon*this.value*100)/100;
+      if (Math.round(kon*onslider.value*100)/100 < kon) {
+        onnew.className = "redbox";
+      }
+      else if (Math.round(kon*onslider.value*100)/100 > kon) {
+        onnew.className = "greenbox";
+      }
+      else {
+        onnew.className = "greyboxdark";
+      }
       regulatedFunction();
   }
 
   offoutput.innerHTML = Math.round(koff*offslider.value*100)/100; // Display the default slider value
   // Update the current slider value (each time you drag the slider handle)
   offslider.oninput = function() {
-      offoutput.innerHTML = Math.round(koff*this.value*100)/100;
-      regulatedFunction();
+    offoutput.innerHTML = Math.round(koff*this.value*100)/100;
+    if (Math.round(koff*offslider.value*100)/100 < koff) {
+        offnew.className = "redbox";
+    }
+    else if (Math.round(koff*offslider.value*100)/100 > koff) {
+        offnew.className = "greenbox";
+    }
+    else {
+        offnew.className = "greyboxdark";
+    }
+    regulatedFunction();
   }
 
   openoutput.innerHTML = Math.round(kopen*openslider.value*100)/100; // Display the default slider value
   // Update the current slider value (each time you drag the slider handle)
   openslider.oninput = function() {
     openoutput.innerHTML = Math.round(kopen*this.value*100)/100;
+    if (Math.round(kopen*openslider.value*100)/100 < kopen) {
+        opennew.className = "redbox";
+    }
+    else if (Math.round(kopen*openslider.value*100)/100 > kopen) {
+        opennew.className = "greenbox";
+    }
+    else {
+        opennew.className = "greyboxdark";
+    }
     regulatedFunction();
   }
 
@@ -724,6 +776,15 @@ var retext;
   // Update the current slider value (each time you drag the slider handle)
   closeslider.oninput = function() {
     closeoutput.innerHTML = Math.round(kclose*this.value*100)/100;
+    if (Math.round(kclose*closeslider.value*100)/100 < kclose) {
+        closenew.className = "redbox";
+    }
+    else if (Math.round(kclose*closeslider.value*100)/100 > kclose) {
+        closenew.className = "greenbox";
+    }
+    else {
+        closenew.className = "greyboxdark";
+    }
     regulatedFunction();
   }
 
@@ -731,14 +792,32 @@ var retext;
   // Update the current slider value (each time you drag the slider handle)
   escapeslider.oninput = function() {
     escapeoutput.innerHTML = Math.round(kescape*this.value*100)/100;
+    if (Math.round(kescape*escapeslider.value*100)/100 < kescape) {
+        escapenew.className = "redbox";
+    }
+    else if (Math.round(kescape*escapeslider.value*100)/100 > kescape) {
+        escapenew.className = "greenbox";
+    }
+    else {
+        escapenew.className = "greyboxdark";
+    }
     regulatedFunction();
   }
 
   concoutput.innerHTML = Math.round(conc*concslider.value*100)/100; // Display the default slider value
   // Update the current slider value (each time you drag the slider handle)
   concslider.oninput = function() {
-      concoutput.innerHTML = Math.round(conc*this.value*100)/100;
-      regulatedFunction();
+    concoutput.innerHTML = Math.round(conc*this.value*100)/100;
+    if (Math.round(conc*concslider.value*100)/100 < conc) {
+        concnew.className = "redbox";
+    }
+    else if (Math.round(conc*concslider.value*100)/100 > conc) {
+        concnew.className = "greenbox";
+    }
+    else {
+        concnew.className = "greyboxdark";
+    }
+    regulatedFunction();
   }
 
   //document.getElementById("basal").innerHTML = "The basal transcript flux at equilibrium is " + bFLUX + " per minute";
