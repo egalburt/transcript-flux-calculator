@@ -374,7 +374,7 @@ span.greyboxlight {
   var bFLUX = flux(conc, kon, koff, kopen, kclose, kescape);
   var rFLUX = flux(conc*concslider.value, kon*onslider.value, koff*offslider.value, kopen*openslider.value, kclose*closeslider.value, kescape*escapeslider.value);
 
-  var A = 6000000000000; //kinetic prefactor (1/s)
+  var A = 5000000; //kinetic prefactor (1/s)
   var RT = 0.616; //RT at 37 C (kcal/mol)
     
   var bDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
