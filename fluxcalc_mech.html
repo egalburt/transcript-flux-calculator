@@ -289,6 +289,12 @@ function transpose(a) {
   return t;
 }
 
+function exportData() {  
+    xaxis.unshift(xaxis_title);
+    yaxis.unshift(yaxis_title);
+    var exporthis = [xaxis, yaxis,t];
+    alasql('SELECT * INTO CSV("data.csv") FROM ?', [exporthis]);
+}
     
 function plot_mech() {
     
