@@ -141,9 +141,6 @@
   </div>
       <div class="minicolumnright">
           <button onclick="plot_mech()"><font size = 5><b>GO</b></font></button>
-      </div>
-      <div class="minicolumnright">
-          <button onclick="exportData()">download data in CSV format</button>
       </div>	  
 </div>
 
@@ -156,11 +153,12 @@
       <sub class='subscript'><font color=#fff>0</font></sub></span>
     <input type="number" min="0" step="0.1" id="concentration" value="1000"> <font size=4>nM</font>
         <div class="minicolumnright">
-            <input type="number" min="0" step="0.1" id="concfoldchange" value="1">
+    <input type="number" min="0" step="0.1" id="concfoldchange" value="1">
         </div>
-
-  </div>
-</div>
+   </div>
+       <div class="minicolumnright">
+          <button onclick="exportData()">download data in CSV format</button>
+      </div>
 </div>
 
 <div class="column">
