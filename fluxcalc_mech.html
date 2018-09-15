@@ -336,9 +336,9 @@ function plot_mech() {
         foldflux[b] = new Array(Number(points)+1);
     }
 
-    var xAxis = new Array(Number(points)+1);
+    xAxis = new Array(Number(points)+1);
     var xAxisTitle;
-    var yAxis = new Array(Number(points)+1);
+    yAxis = new Array(Number(points)+1);
     var yAxisTitle;
     
     image = document.getElementById('imgDisp');
@@ -824,6 +824,12 @@ function plot_mech() {
 
 Plotly.newPlot(document.getElementById('tester'), data, layout, {displayModeBar: true});
     
+}
+	
+function exportData() {
+    transfoldflux.unshift(yAxis);
+    transfoldflux.unshift(xAxis);
+    alasql('SELECT * INTO CSV("data.csv") FROM ?', [transfoldflux]);
 }
     
 </script>
