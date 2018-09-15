@@ -2,6 +2,7 @@
     
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
 </head>
     
 <body>
@@ -376,9 +377,9 @@ span.greyboxlight {
   var A = 5000000; //kinetic prefactor (1/s)
   var RT = 0.616; //RT at 37 C (kcal/mol)
     
-  var bDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
+  bDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
     
-  var rDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
+  rDATA = [2,0,-RT*Math.log(kon*conc/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A),-RT*Math.log(kon*conc/A)+RT*Math.log(koff/A)-RT*Math.log(kopen/A)+RT*Math.log(kclose/A)-RT*Math.log(kescape/A)-5];
     
   var k1 = parseFloat(kon);
   var k2 = parseFloat(koff);
