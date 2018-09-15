@@ -179,7 +179,8 @@
 
 <div class="column">
 <canvas id="myCanvas" width="500px" height="200px" style="border:0px solid #000000;"></canvas>
-<canvas id="myChart" style="border:2px solid #000000;"></canvas>
+<canvas id="myChart" style="border:2px solid #000000;"></canvas><p>
+<button onclick="exportData()">download landscapes in CSV format</button>
 </div>
       
     
@@ -824,4 +825,9 @@ var retext;
   //document.getElementById("regulated").innerHTML = "The regulated transcript flux at equilibrium is " + rFLUX + " per minute";
   //document.getElementById("ratio").innerHTML = "The flux ratio is " + rFLUX/bFLUX;
 
+function exportData() {
+    bDATA.unshift('basal');
+    rDATA.unshift('regulated');
+    alasql('SELECT * INTO CSV("data.csv") FROM ?', [bdata, rDATA]);
+}
 </script>
