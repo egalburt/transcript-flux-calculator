@@ -828,6 +828,9 @@ var retext;
 function exportData() {
     bDATA.unshift('basal');
     rDATA.unshift('regulated');
-    alasql('SELECT * INTO CSV("data.csv") FROM ?', [bdata, rDATA]);
+    var exportThis = [bDATA, rDATA];
+    alasql('SELECT * INTO CSV("data.csv") FROM ?', [exportThis]);
+    bDATA.shift();
+    rDATA.shift();
 }
 </script>
